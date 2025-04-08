@@ -23,11 +23,11 @@ const Hero = () => {
         </a>
 
         <h1 className="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4">
-          Ship your startup in days, not weeks
+          Custom chatbot for your website in 5 minutes
         </h1>
         <p className="text-lg opacity-80 leading-relaxed">
-          The NextJS boilerplate with all you need to build your SaaS, AI tool,
-          or any other web app. From idea to production in 5 minutes.
+        Create a 24/7 customer service agent trained on your website in 5 minutes. 
+        Try for free.
         </p>
         <ButtonLead extraStyle="btn-wide" />
 

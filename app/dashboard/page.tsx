@@ -32,16 +32,16 @@ export default function Dashboard() {
   const [chatbots, setChatbots] = useState<Chatbot[]>([
     {
       id: "chatbot-1",
-      name: "Help Center Assistant",
-      description: "Answers questions about our help center documentation",
+      name: "Rental Inquiry Assistant",
+      description: "Answers questions about available properties and application process",
       status: "online",
       createdAt: new Date(2023, 6, 15),
       lastUpdated: new Date(2023, 8, 10),
       interactions: 1254,
       pagesCrawled: 72,
-      type: "support",
-      url: "https://example.com/help",
-      greetingMessage: "Hi there! How can I help you with our documentation?",
+      type: "sales",
+      url: "https://example.com/properties",
+      greetingMessage: "Hi there! I can help you find the perfect rental property. What are you looking for today?",
       responseLength: "medium",
       accentColor: "#3B82F6",
       iconType: "robot",
@@ -49,16 +49,16 @@ export default function Dashboard() {
     },
     {
       id: "chatbot-2",
-      name: "Sales Inquiry Bot",
-      description: "Handles product inquiries and pricing questions",
+      name: "Maintenance Request Bot",
+      description: "Handles tenant maintenance requests and scheduling",
       status: "offline",
       createdAt: new Date(2023, 7, 22),
       lastUpdated: new Date(2023, 9, 5),
       interactions: 872,
       pagesCrawled: 45,
-      type: "sales",
-      url: "https://example.com/products",
-      greetingMessage: "Hello! I can help you with product information and pricing. What are you looking for today?",
+      type: "support",
+      url: "https://example.com/tenant-portal",
+      greetingMessage: "Hello! I can help you submit a maintenance request or check the status of an existing one. How can I assist you today?",
       responseLength: "long",
       accentColor: "#10B981",
       iconType: "dialog",
@@ -74,6 +74,8 @@ export default function Dashboard() {
   
   const messagesUsed = 18;
   const messagesTotal = 25;
+  const tenantsAssisted = 14;
+  const propertiesListed = 8;
   const messagesPercentage = (messagesUsed / messagesTotal) * 100;
   
   const toggleStatus = (id: string) => {
@@ -107,7 +109,7 @@ export default function Dashboard() {
       pagesCrawled: 0,
       type: "general",
       url: data.url,
-      greetingMessage: data.greetingMessage,
+      greetingMessage: data.greetingMessage || "Hello! How can I help you with your property management needs today?",
       responseLength: data.responseLength,
       accentColor: "#3B82F6",
       iconType: "robot",
@@ -158,9 +160,9 @@ export default function Dashboard() {
   const getBotTypeLabel = (type: string) => {
     switch (type) {
       case 'support':
-        return 'Customer Support';
+        return 'Tenant Support';
       case 'sales':
-        return 'Sales';
+        return 'Rental Inquiries';
       case 'general':
       default:
         return 'General';
@@ -185,10 +187,10 @@ export default function Dashboard() {
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            Dashboard
+            Property Management Dashboard
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
-            Manage your chatbots and view their performance
+            Manage your property chatbots and track tenant interactions
           </p>
         </div>
         <div className="mt-4 lg:mt-0">
@@ -199,66 +201,14 @@ export default function Dashboard() {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 5v14M5 12h14"></path>
             </svg>
-            New Chatbot
+            New Property Bot
           </Button>
         </div>
       </div>
       
-      {/* Subscription status */}
-      <div className="mb-8 bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Free Trial Status
-          </h2>
-          <button
-            onClick={async () => {
-              try {
-                const response = await fetch('/api/stripe/create-checkout', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    priceId: 'price_starter', // Default to starter plan for dashboard upgrade
-                    mode: 'subscription',
-                    successUrl: `${window.location.origin}/dashboard?checkout=success`,
-                    cancelUrl: `${window.location.origin}/dashboard?checkout=canceled`,
-                  }),
-                });
-                
-                const data = await response.json();
-                
-                if (data.url) {
-                  window.location.href = data.url;
-                }
-              } catch (error) {
-                console.error('Error creating checkout:', error);
-              }
-            }}
-            className="text-blue-600 dark:text-blue-400 text-sm hover:underline"
-          >
-            Upgrade Plan
-          </button>
-        </div>
-
-        <div className="flex items-center gap-6">
-          <div className="flex-1">
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-              Messages Used
-            </p>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-              <div
-                className="bg-blue-600 h-2.5 rounded-full"
-                style={{ width: `${messagesPercentage}%` }}
-              ></div>
-            </div>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {messagesUsed} of {messagesTotal} messages ({Math.round(messagesPercentage)}%)
-            </p>
-          </div>
-
-          <div className="hidden sm:block w-px h-16 bg-gray-200 dark:bg-gray-700"></div>
-
+      {/* Stats Section */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 mb-6">
+        <div className="flex items-center justify-center gap-12">
           <div className="text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
               Chatbots
@@ -267,7 +217,7 @@ export default function Dashboard() {
               {chatbots.length}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              of 1
+              active bots
             </p>
           </div>
 
@@ -321,7 +271,7 @@ export default function Dashboard() {
                       variant="outline"
                       className="mx-auto"
                     >
-                      Create Chatbot
+                      Create Property Bot
                     </Button>
                   </td>
                 </tr>
@@ -329,9 +279,33 @@ export default function Dashboard() {
                 chatbots.map((chatbot) => (
                   <tr key={chatbot.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">{chatbot.name}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Created {chatbot.createdAt.toLocaleDateString()}</div>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-9 h-9 rounded-md flex items-center justify-center ${
+                          chatbot.type === 'sales' ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400' : 
+                          chatbot.type === 'support' ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400' : 
+                          'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                        }`}>
+                          {chatbot.type === 'sales' ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                          ) : chatbot.type === 'support' ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                              <line x1="3" y1="9" x2="21" y2="9"></line>
+                              <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-gray-100">{chatbot.name}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Created {chatbot.createdAt.toLocaleDateString()}</div>
+                        </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

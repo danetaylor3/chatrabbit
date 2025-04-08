@@ -305,15 +305,6 @@ export default function DashboardLayout({
               </svg>
               <span className="sr-only">Toggle Menu</span>
             </button>
-            
-            {/* Page title based on active nav item */}
-            <div className="ml-4 md:ml-0">
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
-                {isCreateChatbotPage 
-                  ? 'Create New Chatbot'
-                  : navigation.find(item => isActive(item))?.name || 'Dashboard'}
-              </h1>
-            </div>
           </div>
           
           {/* Light/Dark mode toggle */}

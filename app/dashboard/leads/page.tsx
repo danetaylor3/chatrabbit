@@ -20,8 +20,8 @@ export default function LeadsPage() {
       name: "Michael Johnson",
       email: "michael.j@example.com",
       chatbotId: "1",
-      chatbotName: "Support Assistant",
-      query: "I'd like to know more about enterprise pricing",
+      chatbotName: "Rental Inquiry Assistant",
+      query: "Looking for a 3-bedroom house in the Westside neighborhood",
       timestamp: new Date('2023-10-28T14:32:00'),
       status: 'new'
     },
@@ -30,8 +30,8 @@ export default function LeadsPage() {
       name: "Sarah Williams",
       email: "sarah.w@example.com",
       chatbotId: "2",
-      chatbotName: "Sales Bot",
-      query: "Can someone contact me about a bulk order?",
+      chatbotName: "Maintenance Request Bot",
+      query: "Interested in a 1-bedroom apartment close to downtown with parking",
       timestamp: new Date('2023-10-27T10:15:00'),
       status: 'contacted'
     },
@@ -40,8 +40,8 @@ export default function LeadsPage() {
       name: "David Brown",
       email: "david.b@example.com",
       chatbotId: "1",
-      chatbotName: "Support Assistant",
-      query: "Looking for customization options for our team",
+      chatbotName: "Rental Inquiry Assistant",
+      query: "Looking for a pet-friendly condo with 2 bedrooms under $1,800/month",
       timestamp: new Date('2023-10-26T16:45:00'),
       status: 'qualified'
     },
@@ -50,8 +50,8 @@ export default function LeadsPage() {
       name: "Emma Davis",
       email: "emma.d@example.com",
       chatbotId: "2",
-      chatbotName: "Sales Bot",
-      query: "Interested in a demo of your premium features",
+      chatbotName: "Maintenance Request Bot",
+      query: "Need a 2-bedroom with a home office space and garage",
       timestamp: new Date('2023-10-25T11:22:00'),
       status: 'converted'
     },
@@ -60,8 +60,8 @@ export default function LeadsPage() {
       name: "James Wilson",
       email: "james.w@example.com",
       chatbotId: "1",
-      chatbotName: "Support Assistant",
-      query: "Need pricing for my small business",
+      chatbotName: "Rental Inquiry Assistant",
+      query: "Searching for a short-term lease (6 months) for a furnished apartment",
       timestamp: new Date('2023-10-24T09:18:00'),
       status: 'closed'
     }
@@ -78,8 +78,8 @@ export default function LeadsPage() {
 
   // Chatbots
   const chatbots = [
-    { id: "1", name: "Support Assistant" },
-    { id: "2", name: "Sales Bot" },
+    { id: "1", name: "Rental Inquiry Assistant" },
+    { id: "2", name: "Maintenance Request Bot" },
   ];
 
   // Filter leads based on filters
